@@ -331,11 +331,11 @@ var (
 	botStyle    = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("6"))
 	errorStyle  = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("1"))
 	footerStyle = lipgloss.NewStyle().
-		Height(1).
-		BorderTop(true).
-		BorderStyle(lipgloss.NormalBorder()).
-		BorderForeground(lipgloss.Color("8")).
-		Faint(true)
+			Height(1).
+			BorderTop(true).
+			BorderStyle(lipgloss.NormalBorder()).
+			BorderForeground(lipgloss.Color("8")).
+			Faint(true)
 )
 
 func (m Model) RenderConversation(maxWidth int) string {
@@ -403,7 +403,7 @@ func (m Model) RenderFooter() string {
 
 	// conversation indicator
 	if m.conversations.Len() > 1 {
-		conversationIdx := fmt.Sprintf("%s %d/%d", ConversationIcon, m.conversations.Idx+1, m.conversations.Len())
+		conversationIdx := fmt.Sprintf("%s:%d/%d", ConversationIcon, m.conversations.Idx+1, m.conversations.Len())
 		columns = append(columns, conversationIdx)
 	}
 
@@ -414,15 +414,15 @@ func (m Model) RenderFooter() string {
 		if len(question) > 0 {
 			tokens += tokenizer.CountTokens(m.conversations.Curr().Config.Model, question) + 5
 		}
-		columns = append(columns, fmt.Sprintf("%s %d", TokenIcon, tokens))
+		columns = append(columns, fmt.Sprintf("%s:%d", TokenIcon, tokens))
 	}
 
 	// help
-	columns = append(columns, fmt.Sprintf("%s ctrl+h", HelpIcon))
+	columns = append(columns, fmt.Sprintf("%s:ctrl+h", HelpIcon))
 
 	// prompt
 	prompt := m.conversations.Curr().Config.Prompt
-	prompt = fmt.Sprintf("%s %s", PromptIcon, prompt)
+	prompt = fmt.Sprintf("%s:%s", PromptIcon, prompt)
 	columns = append(columns, prompt)
 
 	totalWidth := lipgloss.Width(strings.Join(columns, ""))
