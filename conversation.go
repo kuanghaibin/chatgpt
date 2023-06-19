@@ -5,6 +5,7 @@ import (
 	"errors"
 	"log"
 	"os"
+	"time"
 
 	"github.com/sashabaranov/go-openai"
 
@@ -152,6 +153,7 @@ func (m *ConversationManager) Next() *Conversation {
 type QnA struct {
 	Question string `json:"question"`
 	Answer   string `json:"answer"`
+	Ts       string `json:"ts"`
 }
 
 type Conversation struct {
@@ -165,6 +167,8 @@ type Conversation struct {
 
 func (c *Conversation) AddQuestion(q string) {
 	c.Pending = &QnA{Question: q}
+	currentTime := time.Now()
+	c.Pending.Ts = currentTime.Format("2006-01-02 15:04:05")
 	c.contextTokens = 0
 }
 
